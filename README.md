@@ -23,18 +23,29 @@ A Docker-based sandbox environment for building and testing AI agents in n8n wit
 
 ### Recommended Ollama Models
 
-| Model | Size | RAM Required | Training Data | Speed | Best For |
-|-------|------|--------------|---------------|-------|----------|
-| **deepseek-r1:1.5b** | ~1GB | 2GB | 2025 | Fast | Quick tasks, testing (default) |
-| **deepseek-r1:8b** | ~4.9GB | 8GB | 2025 | Medium | Balanced performance |
-| **qwen2.5:7b** | ~4.7GB | 8GB | 2024 | Medium | General purpose, multilingual |
-| **llama3.2:3b** | ~2GB | 4GB | 2024 | Fast | Lightweight tasks |
-| **phi3:3.8b** | ~2.3GB | 4GB | 2023 | Fast | Code generation |
-| **mistral:7b** | ~4.1GB | 8GB | 2023 | Medium | General purpose |
-| **deepseek-r1:14b** | ~8.9GB | 16GB | 2025 | Slow | Advanced reasoning |
-| **llama3.1:8b** | ~4.7GB | 8GB | 2024 | Medium | General purpose |
+| Model | Parameters | Size | RAM Required | Training Data | Speed | Best For |
+|-------|-----------|------|--------------|---------------|-------|----------|
+| **deepseek-r1:1.5b** | 1.5B | ~1GB | 2GB | 2025 | Fast | Quick tasks, testing (default) |
+| **llama3.2:3b** | 3B | ~2GB | 4GB | 2024 | Fast | Lightweight tasks |
+| **phi3:3.8b** | 3.8B | ~2.3GB | 4GB | 2023 | Fast | Code generation |
+| **qwen2.5:7b** | 7B | ~4.7GB | 8GB | 2024 | Medium | General purpose, multilingual |
+| **mistral:7b** | 7B | ~4.1GB | 8GB | 2023 | Medium | General purpose |
+| **deepseek-r1:8b** | 8B | ~4.9GB | 8GB | 2025 | Medium | Balanced performance |
+| **llama3.1:8b** | 8B | ~4.7GB | 8GB | 2024 | Medium | General purpose |
+| **deepseek-r1:14b** | 14B | ~8.9GB | 16GB | 2025 | Slow | Advanced reasoning |
+| **qwen2.5:14b** | 14B | ~9GB | 16GB | 2024 | Slow | Advanced multilingual |
+| **gpt-oss:20b** | 20B | ~12GB | 24GB | 2024 | Slow | OpenAI reasoning (open-weight) |
+| **qwen2.5-coder:32b** | 32B | ~19GB | 32GB | 2024 | Slow | Advanced code generation |
+| **qwen2.5:32b** | 32B | ~20GB | 32GB | 2024 | Slow | Enterprise-level tasks |
+| **deepseek-r1:70b** | 70B | ~40GB | 64GB | 2025 | Very Slow | State-of-the-art reasoning |
+| **llama3.1:70b** | 70B | ~40GB | 64GB | 2024 | Very Slow | High-quality reasoning |
+| **qwen2.5:72b** | 72B | ~43GB | 80GB | 2024 | Very Slow | Maximum performance |
+| **nemotron:70b** | 70B | ~40GB | 64GB | 2024 | Very Slow | ChatGPT-level quality (NVIDIA) |
+| **llama3.3:70b** | 70B | ~43GB | 80GB | 2024 | Very Slow | Latest Meta flagship |
+| **gpt-oss:120b** | 120B | ~70GB | 128GB | 2024 | Very Slow | OpenAI agentic tasks (open-weight) |
+| **llama3.1:405b** | 405B | ~231GB | 256GB | 2024 | Extremely Slow | Research/flagship |
 
-> 💡 **Tip**: Start with smaller models (1.5b-3b) if you have limited RAM, or use the default 8b model for better quality responses.
+> 💡 **Tip**: Start with smaller models (1.5b-3b) if you have limited RAM. For GPU clusters, models 70b+ (like **nemotron:70b**, **llama3.3:70b**, or **gpt-oss:120b**) provide ChatGPT-level performance.
 
 ## 🛠️ Services
 
@@ -51,14 +62,46 @@ The container automatically checks if there are any Ollama models installed. If 
 
 ### Managing Models
 
-To install additional models, run:
+First, access the container:
 ```bash
-docker exec -it n8n-sandbox-ollama-1 ollama pull <model-name>
+docker exec -it n8n-sandbox bash
 ```
 
-To list installed models:
+Then use these commands inside the container:
+
+**Install a model:**
 ```bash
-docker exec -it n8n-sandbox-ollama-1 ollama list
+ollama pull <model-name>
+```
+
+**List installed models:**
+```bash
+ollama list
+```
+
+**Remove a model:**
+```bash
+ollama rm <model-name>
+```
+
+**Run a model interactively (for testing):**
+```bash
+ollama run <model-name>
+```
+
+Example workflow:
+```bash
+# Access container
+docker exec -it n8n-sandbox bash
+
+# Install llama3.2:3b
+ollama pull llama3.2:3b
+
+# Test it
+ollama run llama3.2:3b
+
+# Exit container
+exit
 ```
 
 ## 🚦 Usage
