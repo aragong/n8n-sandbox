@@ -23,16 +23,16 @@ A Docker-based sandbox environment for building and testing AI agents in n8n wit
 
 ### Recommended Ollama Models
 
-| Model | Size | RAM Required | Speed | Best For |
-|-------|------|--------------|-------|----------|
-| **deepseek-r1:1.5b** | ~1GB | 2GB | Fast | Quick tasks, testing |
-| **deepseek-r1:8b** | ~4.9GB | 8GB | Medium | Balanced performance (default) |
-| **qwen2.5:7b** | ~4.7GB | 8GB | Medium | General purpose, multilingual |
-| **llama3.2:3b** | ~2GB | 4GB | Fast | Lightweight tasks |
-| **phi3:3.8b** | ~2.3GB | 4GB | Fast | Code generation |
-| **mistral:7b** | ~4.1GB | 8GB | Medium | General purpose |
-| **deepseek-r1:14b** | ~8.9GB | 16GB | Slow | Advanced reasoning |
-| **llama3.1:8b** | ~4.7GB | 8GB | Medium | General purpose |
+| Model | Size | RAM Required | Training Data | Speed | Best For |
+|-------|------|--------------|---------------|-------|----------|
+| **deepseek-r1:1.5b** | ~1GB | 2GB | 2025 | Fast | Quick tasks, testing (default) |
+| **deepseek-r1:8b** | ~4.9GB | 8GB | 2025 | Medium | Balanced performance |
+| **qwen2.5:7b** | ~4.7GB | 8GB | 2024 | Medium | General purpose, multilingual |
+| **llama3.2:3b** | ~2GB | 4GB | 2024 | Fast | Lightweight tasks |
+| **phi3:3.8b** | ~2.3GB | 4GB | 2023 | Fast | Code generation |
+| **mistral:7b** | ~4.1GB | 8GB | 2023 | Medium | General purpose |
+| **deepseek-r1:14b** | ~8.9GB | 16GB | 2025 | Slow | Advanced reasoning |
+| **llama3.1:8b** | ~4.7GB | 8GB | 2024 | Medium | General purpose |
 
 > 💡 **Tip**: Start with smaller models (1.5b-3b) if you have limited RAM, or use the default 8b model for better quality responses.
 
@@ -47,7 +47,7 @@ When the container starts, the following services are automatically launched:
 
 ## 🤖 Ollama Models
 
-The container automatically checks if there are any Ollama models installed. If none are found, it will automatically download the `deepseek-r1:8b` model on first startup.
+The container automatically checks if there are any Ollama models installed. If none are found, it will automatically download the `deepseek-r1:1.5b` model on first startup.
 
 ### Managing Models
 
