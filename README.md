@@ -17,8 +17,24 @@ A Docker-based sandbox environment for building and testing AI agents in n8n wit
 ## 📋 Prerequisites
 
 - Docker and Docker Compose installed
-- At least 8GB of RAM (recommended for running AI models)
-- ~5GB of free disk space for models
+- At least 4GB of RAM for n8n and Ollama (without models loaded)
+- Additional RAM required depends on the AI model you want to run (see table below)
+- Storage: ~500MB for base services + model sizes
+
+### Recommended Ollama Models
+
+| Model | Size | RAM Required | Speed | Best For |
+|-------|------|--------------|-------|----------|
+| **deepseek-r1:1.5b** | ~1GB | 2GB | Fast | Quick tasks, testing |
+| **deepseek-r1:8b** | ~4.9GB | 8GB | Medium | Balanced performance (default) |
+| **qwen2.5:7b** | ~4.7GB | 8GB | Medium | General purpose, multilingual |
+| **llama3.2:3b** | ~2GB | 4GB | Fast | Lightweight tasks |
+| **phi3:3.8b** | ~2.3GB | 4GB | Fast | Code generation |
+| **mistral:7b** | ~4.1GB | 8GB | Medium | General purpose |
+| **deepseek-r1:14b** | ~8.9GB | 16GB | Slow | Advanced reasoning |
+| **llama3.1:8b** | ~4.7GB | 8GB | Medium | General purpose |
+
+> 💡 **Tip**: Start with smaller models (1.5b-3b) if you have limited RAM, or use the default 8b model for better quality responses.
 
 ## 🛠️ Services
 
