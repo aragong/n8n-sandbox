@@ -15,9 +15,12 @@ echo "Ollama is ready!"
 # Verificar si hay modelos instalados
 MODEL_COUNT=$(curl -s http://localhost:11434/api/tags | grep -c '"name"')
 if [ "$MODEL_COUNT" -eq 0 ]; then
-    echo "No models found. Pulling deepseek-r1:1.5b..."
+    echo "No models found. Pulling default models..."
+    echo "Downloading deepseek-r1:1.5b..."
     sudo -u oceanos ollama pull deepseek-r1:1.5b
-    echo "Model downloaded successfully!"
+    echo "Downloading llama3.2:3b..."
+    sudo -u oceanos ollama pull llama3.2:3b
+    echo "Models downloaded successfully!"
 else
     echo "Models already installed. Skipping download."
 fi

@@ -58,7 +58,9 @@ When the container starts, the following services are automatically launched:
 
 ## 🤖 Ollama Models
 
-The container automatically checks if there are any Ollama models installed. If none are found, it will automatically download the `deepseek-r1:1.5b` model on first startup.
+The container automatically checks if there are any Ollama models installed. If none are found, it will automatically download the following models on first startup:
+- `deepseek-r1:1.5b` (~1GB) - Fast, lightweight reasoning model
+- `llama3.2:3b` (~2GB) - Balanced performance for general tasks
 
 ### Managing Models
 
