@@ -16,3 +16,10 @@ services:
       - type: bind
         source: .
         target: /workspaces/n8n-sandbox
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]

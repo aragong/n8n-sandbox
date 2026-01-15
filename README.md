@@ -104,6 +104,69 @@ ollama run llama3.2:3b
 exit
 ```
 
+## 🎮 GPU Support (Optional)
+
+Ollama can leverage NVIDIA GPUs to significantly accelerate inference for smaller models. This is optional and the sandbox works perfectly on CPU.
+
+### GPU Requirements
+
+- **NVIDIA GPU**: Compute Capability 5.0+ (GTX 700 series or newer)
+- **VRAM**: 2GB minimum, 4GB+ recommended
+- **Driver**: NVIDIA drivers 531+ 
+- **Docker**: NVIDIA Container Toolkit (for Docker Desktop on WSL2, GPU support is built-in)
+
+### GPU Performance
+
+When a model fits completely in GPU VRAM, it runs at maximum speed (100% GPU). If the model is larger than available VRAM, **Ollama automatically divides the workload** between GPU and CPU for optimal performance.
+
+**Example with 4GB VRAM (GTX 750 Ti):**
+- `deepseek-r1:1.5b` (1.4GB loaded) → **100% GPU** ⚡ Maximum speed
+- `llama3.2:3b` (2GB loaded) → **100% GPU** ⚡ Fits perfectly
+- `deepseek-r1:8b` (6.2GB loaded) → **43% GPU / 57% CPU** - Automatically split
+
+### Enabling GPU Support
+
+The `docker-compose.yml` is already configured for GPU support. To enable:
+
+**1. Verify GPU is accessible:**
+```bash
+nvidia-smi
+```
+
+**2. For WSL2 (Windows):**
+- Install NVIDIA GPU drivers for WSL2 from [nvidia.com](https://www.nvidia.com/Download/index.aspx)
+- Docker Desktop automatically supports GPU passthrough
+
+**3. For native Linux:**
+Install NVIDIA Container Toolkit:
+```bash
+# Ubuntu/Debian
+curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+curl -fsSL https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+sudo apt-get update
+sudo apt-get install -y nvidia-container-toolkit
+sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+```
+
+**4. Verify GPU in container:**
+```bash
+docker exec -it n8n-sandbox nvidia-smi
+```
+
+**5. Check model GPU usage:**
+```bash
+docker exec -it n8n-sandbox ollama ps
+```
+
+The `PROCESSOR` column shows GPU usage (e.g., "100% GPU" or "43%/57% CPU/GPU").
+
+### GPU Troubleshooting
+
+- **"nvidia-smi: command not found"**: Install proper NVIDIA drivers for your OS/WSL2
+- **No GPU shown in container**: Verify `docker run --gpus all ubuntu nvidia-smi` works
+- **Model not using GPU**: Check `docker logs n8n-sandbox` for GPU detection messages
+
 ## 🚦 Usage
 
 ### With Docker Compose
