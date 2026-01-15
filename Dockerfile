@@ -1,6 +1,10 @@
 # Stage 1: Base - Dependencias del sistema
 FROM ubuntu:24.04 AS base
 
+LABEL maintainer="aragong <https://github.com/aragong>"
+LABEL description="n8n sandbox with Ollama for AI agent development"
+LABEL version="1.0"
+
 RUN apt-get update && apt-get install -y \
     curl \
     git \

@@ -115,6 +115,11 @@ n8n-sandbox/
 - Use the Ollama node in n8n to interact with local AI models
 - Check Ollama documentation for available models: https://ollama.com/library
 
+## 👤 Author
+
+**aragong**
+- GitHub: [@aragong](https://github.com/aragong)
+
 ## 📝 License
 
 This is a sandbox environment for development and testing purposes.
