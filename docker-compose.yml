@@ -1,29 +1,18 @@
 services:
   n8n-ai:
     build: .
-    container_name: n8n-ai-local
+    container_name: n8n-sandbox
     restart: unless-stopped
     ports:
-      - "5678:5678"   # Interfaz de n8n
-      - "11434:11434" # API de Ollama
-    environment:
-      - N8N_PORT=5678
-      - N8N_SECURE_COOKIE=false # Cambiar a true si usas HTTPS/Proxy
+      - "5678:5678"
+      - "11434:11434"
     volumes:
-      # Montajes explícitos para persistencia de datos y modelos
       - type: bind
         source: ./n8n_data
-        target: /root/.n8n
+        target: /home/oceanos/.n8n
       - type: bind
         source: ./ollama_data
-        target: /root/.ollama
-    # Descomenta las siguientes líneas si tienes una GPU NVIDIA configurada:
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: all
-    #           capabilities: [gpu]
-
-# Definición de volúmenes locales (se crearán carpetas automáticamente)
+        target: /home/oceanos/.ollama
+      - type: bind
+        source: .
+        target: /workspaces/n8n-sandbox
