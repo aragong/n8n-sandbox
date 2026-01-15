@@ -119,10 +119,17 @@ Ollama can leverage NVIDIA GPUs to significantly accelerate inference for smalle
 
 When a model fits completely in GPU VRAM, it runs at maximum speed (100% GPU). If the model is larger than available VRAM, **Ollama automatically divides the workload** between GPU and CPU for optimal performance.
 
-**Example with 4GB VRAM (GTX 750 Ti):**
+**Tested Configuration:**
+- **GPU**: NVIDIA GeForce GTX 750 Ti (4GB VRAM)
+- **Environment**: WSL2 on Windows with Ubuntu 20.04.6 LTS
+- **Driver**: NVIDIA 576.52 (WSL2) / CUDA 12.9
+
+**Performance results with GTX 750 Ti (4GB VRAM):**
 - `deepseek-r1:1.5b` (1.4GB loaded) → **100% GPU** ⚡ Maximum speed
 - `llama3.2:3b` (2GB loaded) → **100% GPU** ⚡ Fits perfectly
 - `deepseek-r1:8b` (6.2GB loaded) → **43% GPU / 57% CPU** - Automatically split
+
+> 💡 **Note**: Performance will vary depending on your GPU model and available VRAM. Models that fit completely in VRAM will always run faster than split configurations.
 
 ### Enabling GPU Support
 
