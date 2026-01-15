@@ -59,8 +59,10 @@ When the container starts, the following services are automatically launched:
 ## 🤖 Ollama Models
 
 The container automatically checks if there are any Ollama models installed. If none are found, it will automatically download the following models on first startup:
-- `deepseek-r1:1.5b` (~1GB) - Fast, lightweight reasoning model
-- `llama3.2:3b` (~2GB) - Balanced performance for general tasks
+- `qwen2.5:3b` (~2.4GB) - Best quality multilingual (Spanish/English), 100% GPU
+- `deepseek-r1:1.5b` (~1.4GB) - Fast reasoning model, 100% GPU
+
+> 💡 **Why these models?**: Both are optimized for GTX 750 Ti (4GB VRAM) and run at 100% GPU. Qwen 2.5 excels at multilingual tasks with excellent writing quality, while DeepSeek-R1 provides fast reasoning capabilities.
 
 ### Managing Models
 
@@ -128,8 +130,33 @@ When a model fits completely in GPU VRAM, it runs at maximum speed (100% GPU). I
 
 **Performance results with GTX 750 Ti (4GB VRAM):**
 - `deepseek-r1:1.5b` (1.4GB loaded) → **100% GPU** ⚡ Maximum speed
-- `llama3.2:3b` (2GB loaded) → **100% GPU** ⚡ Fits perfectly
+- `llama3.2:1b` (1.7GB loaded) → **100% GPU** ⚡ Fits perfectly
 - `deepseek-r1:8b` (6.2GB loaded) → **43% GPU / 57% CPU** - Automatically split
+
+### Model Compatibility (GTX 750 Ti - Compute Capability 5.0)
+
+Based on testing with GTX 750 Ti (4GB VRAM), here's the compatibility status for popular small models:
+
+**✅ Fully Compatible (100% GPU):**
+| Model | Size | GPU Usage | Notes |
+|-------|------|-----------|-------|
+| `tinyllama:1.1b` | 800MB | 100% GPU | Ultra fast, basic tasks |
+| `deepseek-r1:1.5b` | 1.4GB | 100% GPU | **Recommended** - Reasoning |
+| `qwen2.5:1.5b` | 1.4GB | 100% GPU | Multilingual support |
+| `llama3.2:1b` | 1.7GB | 100% GPU | General purpose |
+| `qwen2.5:3b` | 2.4GB | 100% GPU | **Best quality** - Multilingual |
+
+**⚠️ Partial Compatibility (GPU/CPU Hybrid):**
+| Model | Size | GPU Usage | Notes |
+|-------|------|-----------|-------|
+| `phi3:3.8b` | 4.0GB | 25% GPU / 75% CPU | Code generation |
+
+**❌ Not Compatible (Crash/Timeout):**
+- `llama3.2:3b` - Exit status 2 (architecture incompatibility)
+- `gemma:2b` - Timeout/crash
+- `phi3.5:3.8b` - Terminated
+
+> 💡 **Recommendation**: For GTX 750 Ti, use `qwen2.5:3b` for best quality or `deepseek-r1:1.5b` for fastest performance. Both run 100% on GPU.
 
 > 💡 **Note**: Performance will vary depending on your GPU model and available VRAM. Models that fit completely in VRAM will always run faster than split configurations.
 
