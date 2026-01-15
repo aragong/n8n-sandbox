@@ -10,6 +10,10 @@ A Docker-based sandbox environment for building and testing AI agents in n8n wit
 - **Easy Setup**: Automated service initialization and model download
 - **Dev Container Ready**: Optimized for VS Code development
 
+> ⚠️ **Important**: Workflow data and configurations are stored locally in `n8n_data/` and `ollama_data/`. These directories are **not** included in version control. If you delete these folders or clone the repository on a new machine, all workflows, credentials, and downloaded models will be lost. Make sure to backup important workflows manually if needed.
+> 
+> 💾 **Docker Persistence**: Data is safe during container rebuilds, restarts, or image updates since it's stored in bind mounts on your host machine. Data is only lost if you manually delete the folders.
+
 ## 📋 Prerequisites
 
 - Docker and Docker Compose installed
@@ -73,19 +77,21 @@ n8n-sandbox/
 ├── docker-compose.yml      # Docker services configuration
 ├── Dockerfile              # Container image definition
 ├── start-services.sh       # Service startup script
-├── n8n_data/              # n8n persistent data
+├── .gitignore             # Git exclusions (runtime data)
+├── n8n_data/              # n8n persistent data (git-ignored)
 │   ├── database.sqlite    # Workflow database
 │   ├── nodes/             # Custom nodes
 │   └── config             # n8n configuration
-└── ollama_data/           # Ollama models and data
+└── ollama_data/           # Ollama models and data (git-ignored)
     └── models/            # Downloaded LLM models
 ```
 
 ## 🔧 Configuration
 
-- n8n data is stored in `./n8n_data`
-- Ollama models are stored in `./ollama_data/models`
-- Both directories are mounted as volumes to persist data
+- n8n data is stored in `./n8n_data` (not versioned - local only)
+- Ollama models are stored in `./ollama_data/models` (not versioned - local only)
+- Both directories are mounted as volumes to persist data between container restarts
+- **Important**: These directories contain runtime data and credentials - they are excluded from git for security
 
 ## 💡 Tips
 
