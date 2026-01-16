@@ -24,6 +24,5 @@
             }
         }
     },
-    "remoteUser": "oceanos",
-    "postStartCommand": "sudo /start-services.sh &"
+    "remoteUser": "oceanos"
 }
